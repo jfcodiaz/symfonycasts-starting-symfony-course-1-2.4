@@ -1,1 +1,14 @@
-Hello <b>{{ firstName }}</b>! {{ count }}
+{% extends '::base.html.twig' %}
+{# a comment#}
+{% block  title 'Yay twiggy Goodnesss!!!!'%}
+{% block body %}
+    {% for i in 1..count %}
+        <div>
+            Hello <b>{{ firstName | upper }}</b>! #{{ i }}
+            {% if i is odd %}
+                and odd number!
+            {%  endif %}
+        </div>
+
+    {% endfor %}
+{% endblock %}
