@@ -22,6 +22,18 @@ $container = $kernel->getContainer();
 $container->enterScope('request');
 $container->set('request', $request);
 
+use Yoda\EventBundle\Entity\Event;
+
+$event = new Event();
+$event->setName("Darth's surprise birthday party!");
+$event->setLocation('Deathstar');
+$event->setTime(new DateTime('tomorrow noon'));
+$event->setDetails("Ha! Darth HATES surprises");
+
+$em = $container->get('doctrine')->getManager();
+$em->persist($event);
+$em->flush();
+/*
 $templating = $container->get('templating');
 
 echo $templating->render(
@@ -29,3 +41,5 @@ echo $templating->render(
         'firstName' => 'Vader',
         'count' => 10
 ));
+*/
+
