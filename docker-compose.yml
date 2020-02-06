@@ -1,0 +1,50 @@
+version: '3.2'
+services: 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80" 
+    volumes:
+      - ./:/var/www
+      - ./docker-files/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+     - php
+  php:
+    build: 
+      context: ./docker-files/images/php-fpm
+      dockerfile: Dockerfile
+    ports:
+      - "6001:6001"
+    links:
+      - mysql 
+      - mailhog
+    volumes:
+      - ./:/var/www
+      - ./docker-files/php-fpm/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links: 
+      - mysql
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: toor
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - '8306:80'
+  mailhog:
+    image: yappabe/mailhog
+    command: ["-storage=maildir", "-maildir-path=/maildir"]
+    volumes:
+      - ./docker-files/data/mail-storage:/maildir
+    ports:
+      - 1025:1025
+      - 1080:8025
+  mysql:
+    image: mysql:5.7 
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'toor'
+    volumes:
+      - ./docker-files/data/mysql:/var/lib/mysql
