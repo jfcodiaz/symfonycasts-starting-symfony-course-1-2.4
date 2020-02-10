@@ -2,6 +2,6 @@ yoda_event_event:
     resource: "@YodaEventBundle/Resources/config/routing/event.yml"
     prefix:   /event
 
-yoda_event_homepage:
-    path:     /{firstName}/{count}
-    defaults: { _controller: YodaEventBundle:Default:index }
+#yoda_event_homepage:
+#    path:     /{firstName}/{count}
+#    defaults: { _controller: YodaEventBundle:Default:index }

@@ -21,9 +21,10 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $events = $em->getRepository('YodaEventBundle:Event')->findAll();
-
+        $googleApiKey = $this->container->getParameter('google_cloud_api_key');
         return $this->render('YodaEventBundle::Event/index.html.twig', array(
             'entities' => $events,
+            'googleApiKey' => $googleApiKey
         ));
     }
 
